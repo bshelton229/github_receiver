@@ -26,4 +26,6 @@ post '/' do
     data = params[:payload]
   end
   Log.create(:message => data)
+  @data = data
+  erb :response
 end
