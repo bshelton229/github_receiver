@@ -20,6 +20,10 @@ get '/' do
 end
 
 post '/' do
-  #data = JSON.parse(params[:payload]['message'])
-  Log.create(:message => params[:payload])
+  begin
+    data = JSON.parse(params[:payload])
+  rescue
+    data = params[:payload]
+  end
+  Log.create(:message => data)
 end
