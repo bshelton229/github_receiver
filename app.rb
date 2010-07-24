@@ -19,9 +19,7 @@ get '/' do
   erb :index
 end
 
-
 post '/' do
   #data = JSON.parse(params[:payload]['message'])
   Log.create(:message => params[:payload])
 end
-
