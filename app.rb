@@ -4,7 +4,7 @@ require 'sinatra'
 require 'dm-core'
 require 'dm-migrations'
 
-DataMapper.setup(:default, YAML::load_file(File.expand_path('../database.yml',__FILE__))['database']['uri'])
+DataMapper.setup(:default, YAML::load_file(File.expand_path('../config.yml',__FILE__))['database']['uri'])
 
 class Log
   include DataMapper::Resource
