@@ -13,6 +13,12 @@ class Log
   property :payload, Json
   property :branch, String
   
+  before :save, :fix_branch
+  
+  def fix_branch
+    self.branch = self.payload['ref'].split('/')[2]
+  end
+  
 end
 
 #This will automatically add the table
@@ -21,7 +27,7 @@ DataMapper.auto_upgrade!
 post '/' do
 
   @data = Log.create :payload => params[:payload]
-  @data.update(:branch => @data.payload['ref'].split('/')[2])
+  #@data.update(:branch => @data.payload['ref'].split('/')[2])
   
   erb :response
 end
