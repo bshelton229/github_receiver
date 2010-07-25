@@ -4,7 +4,7 @@ require 'sinatra'
 require 'dm-core'
 require 'dm-migrations'
 
-DataMapper.setup(:default, YAML::load_file(File.expand_path('../database.yml',__FILE__))['uri'])
+DataMapper.setup(:default, YAML::load_file(File.expand_path('../database.yml',__FILE__))['database']['uri'])
 
 class Log
   include DataMapper::Resource
@@ -25,7 +25,7 @@ post '/' do
   rescue
     data = params[:payload]
   end
-  Log.create(:message => data)
+  Log.create :message => data
   @data = data
   erb :response
 end
