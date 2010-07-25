@@ -5,6 +5,7 @@ require 'dm-core'
 require 'dm-migrations'
 require 'dm-types'
 
+#Load DataMapper
 DataMapper.setup(:default, YAML::load_file(File.expand_path('../config.yml',__FILE__))['database']['uri'])
 
 class Log
@@ -31,5 +32,6 @@ post '/' do
 
   @data = Log.create :payload => params[:payload]
   
-  erb :response
+  #erb :response
+  "payload received"
 end
