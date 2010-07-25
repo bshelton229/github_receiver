@@ -10,6 +10,7 @@ class Log
   include DataMapper::Resource
   property :id, Serial
   property :message, Text
+  property :branch, String
 end
 
 #This will automatically add the table
@@ -25,7 +26,8 @@ post '/' do
   rescue
     data = params[:payload]
   end
-  Log.create :message => data
+
+  Log.create :message => data, :branch => data['ref'].split('/')[2]
   @data = data
   erb :response
 end
