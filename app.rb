@@ -3,13 +3,14 @@ require 'json'
 require 'sinatra'
 require 'dm-core'
 require 'dm-migrations'
+require 'dm-types'
 
 DataMapper.setup(:default, YAML::load_file(File.expand_path('../config.yml',__FILE__))['database']['uri'])
 
 class Log
   include DataMapper::Resource
   property :id, Serial
-  property :message, Text
+  property :payload, Json
   property :branch, String
 end
 
@@ -17,13 +18,8 @@ end
 DataMapper.auto_upgrade!
 
 post '/' do
-  begin
-    data = JSON.parse(params[:payload])
-  rescue
-    data = params[:payload]
-  end
 
-  Log.create :message => data, :branch => data['ref'].split('/')[2]
-  @data = data
+  @data = Log.create :payload => params[:payload]
+  
   erb :response
 end
