@@ -16,10 +16,6 @@ end
 #This will automatically add the table
 DataMapper.auto_upgrade!
 
-get '/' do
-  erb :index
-end
-
 post '/' do
   begin
     data = JSON.parse(params[:payload])
