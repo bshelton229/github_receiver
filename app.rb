@@ -12,6 +12,7 @@ class Log
   property :id, Serial
   property :payload, Json
   property :branch, String
+  
 end
 
 #This will automatically add the table
@@ -20,6 +21,7 @@ DataMapper.auto_upgrade!
 post '/' do
 
   @data = Log.create :payload => params[:payload]
+  @data.update(:branch => @data['ref'].split('/')[2])
   
   erb :response
 end
