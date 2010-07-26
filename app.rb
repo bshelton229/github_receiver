@@ -14,5 +14,15 @@ DataMapper.auto_upgrade!
 
 post '/' do
   @data = Log.create :payload => params[:payload]
+  begin
+    @config = YAML::load_file(File.expand_path('/etc/github_trigger.conf'))
+    if @config[@data.repo]
+      git = `which git`.chomp!
+      system "cd #{@config[@data.repo]['dir']}; #{@git} pull origin master"
+    end
+  rescue
+    @config = false
+  end
+   
   "payload received"
 end
