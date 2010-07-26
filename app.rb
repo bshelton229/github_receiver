@@ -10,15 +10,19 @@ class Log
   include DataMapper::Resource
   property :id, Serial
   property :payload, Json
+  property :repository_name, String
   property :branch, String
+
   
-  before :save, :fix_branch
+  before :save, :load_data
   
   #Set the branch
-  def fix_branch
+  def load_data
     self.branch = self.payload['ref'].split('/')[2]
+    self.repository_name = self.payload['repository']['name']
   rescue
     self.branch = nil
+    self.repository_name = nil
   end
   
 end
@@ -27,13 +31,6 @@ end
 DataMapper.auto_upgrade!
 
 post '/' do
-
   @data = Log.create :payload => params[:payload]
-  
-  #erb :response
   "payload received"
-end
-
-get '/test' do
-  "test"
 end
