@@ -1,4 +1,5 @@
 require 'json'
+require 'yaml'
 require 'dm-core'
 require 'dm-migrations'
 require 'dm-types'
