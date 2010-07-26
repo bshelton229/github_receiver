@@ -10,7 +10,7 @@ class Log
   include DataMapper::Resource
   property :id, Serial
   property :payload, Json
-  property :repository_name, String
+  property :repo, String
   property :branch, String
 
   
@@ -19,10 +19,10 @@ class Log
   #Set the branch
   def load_data
     self.branch = self.payload['ref'].split('/')[2]
-    self.repository_name = self.payload['repository']['name']
+    self.repo = self.payload['repository']['name']
   rescue
     self.branch = nil
-    self.repository_name = nil
+    self.repo = nil
   end
   
 end
