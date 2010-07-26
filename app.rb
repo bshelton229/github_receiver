@@ -5,13 +5,13 @@ require 'dm-migrations'
 require 'dm-types'
 require 'dm-timestamps'
 
-#Load DataMapper
+#Set up the datamapper database connection
 DataMapper.setup(:default, YAML::load_file(File.expand_path('../config.yml',__FILE__))['database']['uri'])
 
 #Load our DataMapper models
 Dir[File.expand_path('../models/*.rb',__FILE__)].each {|f| require f }
 
-#This will automatically add the table
+#This will automatically add the table and run any schema changes
 DataMapper.auto_upgrade!
 
 #Receive the POST from github and process
@@ -30,6 +30,6 @@ post '/' do
     @config = false
   end
    
-  #Perform ACTION using @data
+  #Output
   "payload received"
 end
