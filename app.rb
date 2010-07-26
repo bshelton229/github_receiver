@@ -1,4 +1,10 @@
 require 'rubygems'
+
+#Bundler
+require 'bundler'
+Bundler.setup
+
+
 require 'json'
 require 'sinatra'
 require 'dm-core'
