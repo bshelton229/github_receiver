@@ -22,7 +22,7 @@ post '/' do
     @config = YAML::load_file(File.expand_path('/etc/github_trigger.conf'))
     @config_repo = @config[@data.repo]
     if @config_repo
-      git = `which git`.chomp!
+      @git = `which git`.chomp!
       system "cd #{@config_repo['dir']}; #{@git} pull origin master"
     end
   rescue
