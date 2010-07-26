@@ -1,12 +1,5 @@
 require 'rubygems'
-
-#Bundler
-require 'bundler'
-Bundler.setup
-
-
 require 'json'
-require 'sinatra'
 require 'dm-core'
 require 'dm-migrations'
 require 'dm-types'
@@ -40,4 +33,8 @@ post '/' do
   
   #erb :response
   "payload received"
+end
+
+get '/test' do
+  "test"
 end
