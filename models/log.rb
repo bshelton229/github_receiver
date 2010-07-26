@@ -5,7 +5,9 @@ class Log
   property :payload, Json
   property :repo, String
   property :branch, String
-
+  
+  property :created_at, DateTime
+  property :updated_at, DateTime
   
   before :save, :load_data
   

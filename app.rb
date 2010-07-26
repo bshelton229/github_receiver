@@ -3,6 +3,7 @@ require 'yaml'
 require 'dm-core'
 require 'dm-migrations'
 require 'dm-types'
+require 'dm-timestamps'
 
 #Load DataMapper
 DataMapper.setup(:default, YAML::load_file(File.expand_path('../config.yml',__FILE__))['database']['uri'])
