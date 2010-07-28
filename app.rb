@@ -14,6 +14,11 @@ Dir[File.expand_path('../models/*.rb',__FILE__)].each {|f| require f }
 #This will automatically add the table and run any schema changes
 DataMapper.auto_upgrade!
 
+#Root path
+get '/' do
+  "Github Trigger"
+end
+
 #Receive the POST from github and process
 post '/' do
   #Save the post to the Log model
