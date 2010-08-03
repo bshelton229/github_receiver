@@ -1,0 +1,3 @@
+---
+database:
+  uri: mysql://user:password@localhost/github_receiver

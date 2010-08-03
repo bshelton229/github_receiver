@@ -16,7 +16,7 @@ DataMapper.auto_upgrade!
 
 #Root path
 get '/' do
-  "Github Trigger"
+  erb :index
 end
 
 #Receive the POST from github and process
