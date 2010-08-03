@@ -25,12 +25,22 @@ post '/' do
   @data = Log.create :payload => params[:payload]
   
   begin
+    #Load the config file
     @config = YAML::load_file(File.expand_path('/etc/github_trigger.conf'))
+
+    #Get the repo we're conerned with from the hook
     @config_repo = @config[@data.repo]
+
     if @config_repo
+
+      #Find the system git command
       @git = `which git`.chomp!
-      system "cd #{@config_repo['dir']}; #{@git} pull origin master"
+
+      #Run the git pull in the directory specified from the config file
+      system "cd #{@config_repo['dir']}; #{@git} pull"
+      
     end
+    
   rescue
     @config = false
   end
