@@ -5,6 +5,7 @@ class Log
   property :payload, Json
   property :repo, String
   property :branch, String
+  property :response, Text
   
   property :created_at, DateTime
   property :updated_at, DateTime

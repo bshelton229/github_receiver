@@ -37,7 +37,10 @@ post '/' do
       @git = `which git`.chomp!
 
       #Run the git pull in the directory specified from the config file
-      system "cd #{@config_repo['dir']}; #{@git} pull"
+      output = `cd #{@config_repo['dir']}; #{@git} pull`
+
+      #Log the result in the database
+      @data.update(:response => output)
       
     end
     
