@@ -1,4 +1,3 @@
-require 'json'
 require 'yaml'
 require 'dm-core'
 require 'dm-migrations'
@@ -16,6 +15,7 @@ DataMapper.auto_upgrade!
 
 #Root path
 get '/' do
+  @logs = Log.all
   erb :index
 end
 
