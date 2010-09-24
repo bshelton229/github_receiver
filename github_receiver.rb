@@ -32,12 +32,15 @@ post '/' do
 
       #Find the system git command
       @git = `which git`.chomp!
+
       #Run the git pull in the directory specified from the config file
-      @data.git_response = `cd #{@config_repo['dir']}; #{@git} pull`
+      git_response = `cd #{@config_repo['dir']}; #{@git} pull`
+      @data.git_response = git_response
       
       #Try commands
       if @repo['post_command']
-        @data.post_command = `#{@repo['post_command']}`
+        post_command = `#{@repo['post_command']}`
+        @data.post_command = post_command
       end
 
       #Save to the database
