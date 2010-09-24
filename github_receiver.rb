@@ -29,12 +29,19 @@ post '/' do
     #Get the repo we're conerned with from the hook
     @config_repo = @config[@data.repo]
     if @config_repo
+
       #Find the system git command
       @git = `which git`.chomp!
       #Run the git pull in the directory specified from the config file
-      output = `cd #{@config_repo['dir']}; #{@git} pull`
-      #Log the result in the database
-      @data.update(:response => output)
+      @data.git_response = `cd #{@config_repo['dir']}; #{@git} pull`
+      
+      #Try commands
+      if @repo['post_command']
+        @data.post_command = `#{@repo['post_command']}`
+      end
+
+      #Save to the database
+      @data.save
     end
   rescue
     @config = false

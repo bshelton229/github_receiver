@@ -5,7 +5,8 @@ class Log
   property :payload, Json
   property :repo, String
   property :branch, String
-  property :response, Text
+  property :git_response, Text
+  property :command_response, Text
   
   property :created_at, DateTime
   property :updated_at, DateTime
