@@ -35,16 +35,13 @@ post '/' do
 
       #Run the git pull in the directory specified from the config file
       git_response = `cd #{@config_repo['dir']}; #{@git} pull`
-      @data.git_response = git_response
+      @data.update(:git_response => git_response)
       
       #Try commands
       if @repo['post_command']
         post_command = `#{@repo['post_command']}`
-        @data.post_command = post_command
+        @data.update(:post_command => post_command)
       end
-
-      #Save to the database
-      @data.save
     end
   rescue
     @config = false
