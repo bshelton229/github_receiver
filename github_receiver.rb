@@ -37,11 +37,10 @@ post '/' do
       @data.git_response = `cd #{@config_repo['dir']}; #{@git} pull`
       #@data.update(:git_response => git_response)
       
-      #Try commands
-      # if @repo['post_command']
-      #   post_command = `#{@repo['post_command']}`
-      #   @data.update(:post_command => post_command)
-      # end
+      #Try post_command
+      if @config_repo['post_command']
+        @data.command_response = `#{@config_repo['post_command']}`
+      end
       
       @data.save
     end
