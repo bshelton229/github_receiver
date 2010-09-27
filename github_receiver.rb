@@ -34,14 +34,16 @@ post '/' do
       @git = `which git`.chomp!
 
       #Run the git pull in the directory specified from the config file
-      git_response = `cd #{@config_repo['dir']}; #{@git} pull`
-      @data.update(:git_response => git_response)
+      @data.git_response = `cd #{@config_repo['dir']}; #{@git} pull`
+      #@data.update(:git_response => git_response)
       
       #Try commands
-      if @repo['post_command']
-        post_command = `#{@repo['post_command']}`
-        @data.update(:post_command => post_command)
-      end
+      # if @repo['post_command']
+      #   post_command = `#{@repo['post_command']}`
+      #   @data.update(:post_command => post_command)
+      # end
+      
+      @data.save
     end
   rescue
     @config = false
