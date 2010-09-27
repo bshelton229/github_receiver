@@ -39,7 +39,7 @@ post '/' do
       
       #Try post_command
       if @config_repo['post_command']
-        @data.command_response = `#{@config_repo['post_command']}`
+        @data.command_response = `cd #{@config_repo['dir']}; #{@config_repo['post_command']}`
       end
       
       @data.save
