@@ -4,6 +4,9 @@ require 'dm-migrations'
 require 'dm-types'
 require 'dm-timestamps'
 
+#Load the lib dir
+Dir[File.expand_path('../lib',__FILE__)+"/*.rb"].each {|f| require f }
+
 #Set up the datamapper database connection
 DataMapper.setup(:default, YAML::load_file(File.expand_path('../config.yml',__FILE__))['database']['uri'])
 
@@ -15,7 +18,6 @@ DataMapper.auto_upgrade!
 
 #Root path
 get '/' do
-  @logs = Log.all
   erb :index
 end
 
@@ -25,7 +27,7 @@ post '/' do
   @data = Log.create :payload => params[:payload]
   begin
     #Load the config file
-    @config = YAML::load_file(File.expand_path('/etc/github_trigger.conf'))
+    @config = GithubReceiver::config
     #Get the repo we're conerned with from the hook
     @config_repo = @config[@data.repo]
     if @config_repo
