@@ -18,6 +18,7 @@ DataMapper.auto_upgrade!
 
 #Root path
 get '/' do
+  @version = File.read(File.expand_path("../VERSION",__FILE__)).strip
   erb :index
 end
 
