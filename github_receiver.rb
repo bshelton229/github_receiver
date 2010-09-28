@@ -5,13 +5,13 @@ require 'dm-types'
 require 'dm-timestamps'
 
 #Load the lib dir
-Dir[File.expand_path('../lib',__FILE__)+"/*.rb"].each {|f| require f }
-
-#Set up the datamapper database connection
-DataMapper.setup(:default, YAML::load_file(File.expand_path('../config.yml',__FILE__))['database']['uri'])
+Dir[File.expand_path('../lib/*.rb',__FILE__)].each {|f| require f }
 
 #Load our DataMapper models
 Dir[File.expand_path('../models/*.rb',__FILE__)].each {|f| require f }
+
+#Set up the datamapper database connection
+DataMapper.setup(:default, YAML::load_file(File.expand_path('../config.yml',__FILE__))['database']['uri'])
 
 #This will automatically add the table and run any schema changes
 DataMapper.auto_upgrade!
