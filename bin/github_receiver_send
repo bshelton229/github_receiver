@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+#This binary can be used by local git projects to generate a very simple payload to be
+#read by github_receiver
+
+require 'rubygems'
+require 'net/http'
+require 'json'
+require 'uri'
+
+
+#We need validation and optparse options, coming soon
+url = ARGV.shift
+branch = ARGV.shift
+repository = ARGV.shift
+
+#Build the payload hash
+payload = {'ref' => "refs/heads/#{branch}", 'repository' => {'name' => repository }}
+
+#Post the payload, converted to JSON
+send_payload = Net::HTTP.post_form(URI.parse(url),{'payload' => payload.to_json })
+
+puts send_payload.body
