@@ -1,3 +1,7 @@
 ---
 database:
   uri: mysql://user:password@localhost/github_receiver
+
+#For the local git hook
+receiver_send:
+  default: http://localhost:8080/

@@ -29,7 +29,7 @@ post '/' do
   begin
     #Load the config file
     @config = GithubReceiver::config
-    #Get the repo we're conerned with from the hook
+    #See if the repo specified in the payload has an entry in the config file
     @config_repo = @config[@data.repo]
     if @config_repo
 

@@ -1,0 +1,39 @@
+#!/usr/bin/env ruby
+
+#Symlink this in the hooks directory of your bare git repository to have it POST data to a
+#URL specified in the project's config.yml file (not the github_receiver.conf file)
+#This shoudl be in the config.yml file:
+# receiver_send:
+#  url: http://localhost:8080/
+
+require 'rubygems'
+require 'net/http'
+require 'json'
+require 'uri'
+
+#See if we're a symlink, we should be if we're running as a git hook
+if File.symlink?(__FILE__)
+  #Read STDIN from git
+  stdin = STDIN.read.split(/\s/)
+  branch = stdin[2]
+  
+  #Find the symlink source, then step back to find the project's config.yml file for read
+  config = YAML::load_file(File.expand_path('../../config.yml',File.readlink(__FILE__)))
+  url = config['receiver_send']['default']
+  
+  #Find the repo name
+  repo = File.basename(File.expand_path('../../',__FILE__), '.git')
+  
+  #Build the payload hash with what we need for github_receiver
+  payload = {'ref' => branch, 'repository' => {'name' => repo }}
+
+  #Post the payload, converted to JSON
+  send_payload = Net::HTTP.post_form URI.parse(url), {'payload' => payload.to_json }
+
+  puts send_payload.body
+  exit
+  
+else
+  puts "We're not symlinked within a git hooks directory"
+  exit
+end
